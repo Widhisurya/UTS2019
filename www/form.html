@@ -1,0 +1,111 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/ionic.css">
+     <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/geturi.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var id_barang = decodeURI(getUrlVars()["id_barang"]);
+        var nama_br = decodeURI(getUrlVars()["nama_br"]);
+        var hrgasewa = decodeURI(getUrlVars()["hrgasewa"]);
+        var lamasewa = decodeURI(getUrlVars()["lamasewa"]);
+
+            $("#id_barang").val(id_barang);
+            $("#nama_br").val(nama_br);
+            $("#hrgasewa").val(hrgasewa);
+            $("#lamasewa").val(lamasewa);
+            $("#update").click(function () {
+                var id_barang = $("#id_barang").val();
+                var nama_br = $("#nama_br").val();
+                var hrgasewa = $("#hrgasewa").val();
+                var lamasewa = $("#lamasewa").val();
+
+                var dataString = "&id_barang=" + id_barang + "&nama_br=" +
+                    nama_br + "&hrgasewa=" +
+                    hrgasewa + "&lamasewa=" + lamasewa  +
+                    "&update=";
+              
+               $.ajax({
+                    type: "POST",
+                    url: "https://widhihi.000webhostapp.com/restandro-master/update_produk.php",
+                    data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function () {
+                        $("#update").val('Connecting...');
+                    },
+                    success: function (data) {
+                        if (data == "success") {
+                            alert("Data Berhasil Dirubah");
+                            $("#update").val("Update");
+                            window.location = "index.html";
+                        } else if (data == "error") {
+                            alert("error");
+                        }
+                    }
+                });
+            });
+        $("#delete").click(function() {
+            var id_barang = $("#id_barang").val();
+            var dataString = "id_barang=" + id_barang + "&delete=";
+            $.ajax({
+                type: "GET",
+                url: "https://widhihi.000webhostapp.com/restandro-master/delete_produk.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#delete").val('Connecting...');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Deleted");
+                        $("#delete").val("Delete");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+        <a href="index.html" class="button button-clear">Home</a>
+        <h1 class="title">Update Database</h1>
+        <a class="button button-clear" href="readjson.html">Read JSON</a>
+    </div>
+    <br/>
+    <br/>
+    <div class="list">
+        <div class="item">
+            <label>id</label>
+        <input type="id_barang" id="id_barang" value="" />
+
+        </div>        <div class="item">
+            <label>nama_br</label>
+            <input type="text" id="nama_br" value="" />
+        </div>
+        <div class="item">
+            <label>hrgasewa</label>
+            <input type="text" id="hrgasewa" value="" />
+        </div>
+        <div class="item">
+            <label>lamasewa</label>
+            <input type="text" id="lamasewa" value="" />
+        </div>
+        
+        <div class="item">
+            <input type="button" id="update" class="button button-block" value="Update" />
+            <input type="button" id="delete" class="button button-block" value="Delete" />
+        </div>
+    </div>
+</body>
+
+</html>

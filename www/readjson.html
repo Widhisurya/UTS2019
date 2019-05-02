@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/ionic.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var url = "https://widhihi.000webhostapp.com/restandro-master/json_produk.php";
+        $.getJSON(url, function(result) {
+            console.log(result);
+            $.each(result, function(i, field) {
+                var id_barang = field.id_barang;
+                var nama_br = field.nama_br;
+                var hrgasewa = field.hrgasewa;
+                var lamasewa = field.lamasewa;
+
+                $("#listview").append("<a class='item' href='form.html?id_barang=" + id_barang + "&nama_br=" + nama_br + "&hrgasewa=" + hrgasewa + "&lamasewa=" + lamasewa + "'> <span class='item-note'>" + id_barang + "</span></a>"+"<h5>" + nama_br + " </h4> " +"<h5>" + hrgasewa + " </h5> <p>" + lamasewa + "</p>");
+            });
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+        <a href="index.html" class="button button-clear">Home</a>
+        <h1 class="title">Read Database (JSON)</h1>
+    </div>
+    <br/>
+    <br/>
+    <ul class="list" id="listview">
+    </ul>
+</body>
+
+</html>
